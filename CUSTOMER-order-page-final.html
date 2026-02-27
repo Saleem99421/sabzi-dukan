@@ -4,24 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🥬 Hari Sabzi — Fresh Vegetables</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Sans+Kannada:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
 <style>
 :root{--g1:#1a3a2a;--g2:#2d6a4f;--g3:#40916c;--g4:#74c69d;--acc:#f4a261;--acc2:#e76f51;--bg:#0d1f17;--card:#162a1e;--card2:#1e3829;--text:#e8f5ee;--muted:#7aad8f;--border:#2d5040;--wa:#25d366;--radius:16px;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Sora','Noto Sans Devanagari',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body{font-family:'Sora','Noto Sans Devanagari','Noto Sans Kannada',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(64,145,108,0.12) 0%,transparent 60%);pointer-events:none;z-index:0;}
-.hero{padding:28px 20px 20px;text-align:center;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(45,106,79,0.3) 0%,transparent 100%);}
+
+/* LANGUAGE SWITCHER */
+.lang-bar{display:flex;justify-content:center;gap:6px;padding:10px 16px;background:rgba(45,106,79,0.2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+.lang-btn{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:var(--card);color:var(--muted);font-family:'Sora',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
+.lang-btn.active{background:var(--g2);border-color:var(--g3);color:white;}
+
+.hero{padding:24px 20px 18px;text-align:center;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(45,106,79,0.3) 0%,transparent 100%);}
 .hero-emoji{font-size:2.5rem;display:block;margin-bottom:6px;animation:float 3s ease-in-out infinite;}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .hero h1{font-size:1.8rem;font-weight:800;letter-spacing:-1px;margin-bottom:4px;}
 .hero h1 span{color:var(--g4);}
-.hero p{font-size:0.85rem;color:var(--muted);margin-bottom:16px;}
+.hero p{font-size:0.85rem;color:var(--muted);margin-bottom:14px;}
 .fresh-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(116,198,157,0.15);border:1px solid var(--g4);color:var(--g4);padding:5px 14px;border-radius:30px;font-size:0.75rem;font-weight:600;}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--g4);animation:pulse 1.5s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
 .search-wrap{padding:14px 16px 0;position:relative;z-index:1;}
-.search-wrap input{width:100%;padding:12px 18px 12px 44px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:'Sora',sans-serif;font-size:0.9rem;outline:none;}
+.search-wrap input{width:100%;padding:12px 18px 12px 44px;background:var(--card);border:1.5px solid var(--border);border-radius:12px;color:var(--text);font-family:'Sora','Noto Sans Kannada',sans-serif;font-size:0.9rem;outline:none;}
 .search-wrap input:focus{border-color:var(--g3);}
 .search-wrap input::placeholder{color:var(--muted);}
 .search-icon{position:absolute;left:28px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none;}
@@ -76,7 +83,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .total-line.big{font-size:1.1rem;font-weight:800;color:var(--text);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);margin-bottom:0;}
 .cust-form{padding:0 20px 16px;}
 .cust-form h3{font-size:0.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;}
-.inp{width:100%;padding:11px 14px;margin-bottom:10px;background:var(--card2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Sora',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+.inp{width:100%;padding:11px 14px;margin-bottom:10px;background:var(--card2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Sora','Noto Sans Kannada',sans-serif;font-size:0.9rem;outline:none;}
 .inp:focus{border-color:var(--g3);}
 .inp::placeholder{color:var(--muted);}
 .pay-section{padding:0 20px 12px;}
@@ -107,21 +114,28 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:500;}
 .loading-screen .spin{font-size:3rem;animation:spin 1s linear infinite;display:block;margin-bottom:12px;}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-screen p{color:var(--muted);font-size:0.9rem;}
 </style>
 </head>
 <body>
 
 <div class="loading-screen" id="loadingScreen">
   <span class="spin">🌿</span>
-  <p>Sabziyan load ho rahi hain...</p>
+  <p id="loadingText">Loading...</p>
+</div>
+
+<!-- LANGUAGE SWITCHER -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('hi')" id="lb_hi">हिंदी</button>
+  <button class="lang-btn" onclick="setLang('en')" id="lb_en">English</button>
+  <button class="lang-btn" onclick="setLang('ro')" id="lb_ro">Roman</button>
+  <button class="lang-btn" onclick="setLang('kn')" id="lb_kn">ಕನ್ನಡ</button>
 </div>
 
 <div class="hero">
   <span class="hero-emoji">🥬</span>
   <h1 id="shopName">Hari <span>Sabzi</span></h1>
-  <p>Taze sabziyan — seedha khet se aapke ghar tak</p>
-  <div class="fresh-badge"><div class="dot"></div> Aaj ki Taza Sabzi</div>
+  <p id="heroSubtitle">Taze sabziyan — seedha khet se aapke ghar tak</p>
+  <div class="fresh-badge"><div class="dot"></div> <span id="freshBadge">Aaj ki Taza Sabzi</span></div>
 </div>
 
 <div class="search-wrap">
@@ -129,117 +143,363 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <input type="text" id="searchInput" placeholder="Sabzi dhundho..." oninput="renderProducts()">
 </div>
 <div class="cats" id="catRow"></div>
-<div class="section-title">Aaj Upalabdh Hai</div>
+<div class="section-title" id="sectionTitle">Aaj Upalabdh Hai</div>
 <div class="grid" id="productGrid"></div>
 
 <div class="cart-bar hidden" id="cartBar">
   <button class="cart-btn" onclick="openCart()">
-    <span>🛒 Cart &nbsp;·&nbsp; <span id="cartTotal">₹0</span></span>
+    <span id="cartBtnText">🛒 Cart Dekho &nbsp;·&nbsp; <span id="cartTotal">₹0</span></span>
     <span class="cart-count" id="cartCount">0</span>
   </button>
 </div>
 
+<!-- CART MODAL -->
 <div class="modal-overlay" id="cartModal">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-header"><h2>🛒 Aapka Cart</h2><p id="cartSubtitle"></p></div>
+    <div class="modal-header"><h2 id="cartTitle">🛒 Aapka Cart</h2><p id="cartSubtitle"></p></div>
     <div class="cart-items" id="cartItemsList"></div>
     <div class="cart-total-row" id="cartTotalBox"></div>
     <div class="cust-form">
-      <h3>Aapki Jankari</h3>
+      <h3 id="yourInfoTitle">Aapki Jankari</h3>
       <input class="inp" id="custName" placeholder="Aapka Naam *">
-      <input class="inp" id="custPhone" placeholder="Mobile Number * (WhatsApp)" type="tel" maxlength="10">
+      <input class="inp" id="custPhone" placeholder="Mobile Number *" type="tel" maxlength="10">
       <input class="inp" id="custAddress" placeholder="Delivery Address *">
     </div>
     <div class="pay-section">
-      <div class="pay-title">Payment Tarika</div>
+      <div class="pay-title" id="payTitle">Payment Tarika</div>
       <div class="pay-opts">
-        <div class="pay-opt active" id="po_upi" onclick="selectPay('upi')"><span class="pi">💳</span><span class="pl">UPI / QR</span></div>
-        <div class="pay-opt" id="po_cod" onclick="selectPay('cod')"><span class="pi">💵</span><span class="pl">Cash on Delivery</span></div>
+        <div class="pay-opt active" id="po_upi" onclick="selectPay('upi')"><span class="pi">💳</span><span class="pl" id="upiLabel">UPI / QR</span></div>
+        <div class="pay-opt" id="po_cod" onclick="selectPay('cod')"><span class="pi">💵</span><span class="pl" id="codLabel">Cash on Delivery</span></div>
       </div>
       <div class="upi-box" id="upiBox">
-        <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px">UPI ID pe payment karein:</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-bottom:6px" id="upiInstruct">UPI ID pe payment karein:</div>
         <div class="upi-id" id="displayUPI">—</div>
-        <button class="upi-copy" onclick="copyUPI()">📋 Copy UPI ID</button>
-        <div class="upi-note">✅ Payment ke baad screenshot WhatsApp pe bhejein</div>
+        <button class="upi-copy" onclick="copyUPI()" id="copyBtn">📋 Copy UPI ID</button>
+        <div class="upi-note" id="upiNote">✅ Payment ke baad screenshot WhatsApp pe bhejein</div>
       </div>
-      <div class="cod-box" id="codBox"><p>💵 Delivery ke waqt cash denge!</p></div>
+      <div class="cod-box" id="codBox"><p id="codMsg">💵 Delivery ke waqt cash denge!</p></div>
     </div>
     <div class="action-btns">
       <button class="wa-btn" id="orderBtn" onclick="placeOrder()">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp pe Order Bhejo
+        <span id="waBtnText">WhatsApp pe Order Bhejo</span>
       </button>
-      <button onclick="closeCart()" style="background:none;border:1.5px solid var(--border);color:var(--muted);padding:12px;border-radius:12px;font-family:'Sora',sans-serif;font-size:0.9rem;cursor:pointer;">Wapas Jao</button>
+      <button onclick="closeCart()" id="backBtn" style="background:none;border:1.5px solid var(--border);color:var(--muted);padding:12px;border-radius:12px;font-family:'Sora',sans-serif;font-size:0.9rem;cursor:pointer;">Wapas Jao</button>
     </div>
   </div>
 </div>
 
 <div class="success-overlay" id="successOverlay">
   <div class="success-icon">🎉</div>
-  <h2>Order Ho Gaya!</h2>
-  <p>WhatsApp pe order gaya hai.<br>Owner jald confirm karega! 🥬</p>
-  <button class="success-close" onclick="document.getElementById('successOverlay').classList.remove('show')">✅ Theek Hai</button>
+  <h2 id="successTitle">Order Ho Gaya!</h2>
+  <p id="successMsg">WhatsApp pe order gaya hai.<br>Owner jald confirm karega! 🥬</p>
+  <button class="success-close" onclick="document.getElementById('successOverlay').classList.remove('show')" id="successBtn">✅ Theek Hai</button>
 </div>
 
 <script>
-const { createClient } = supabase;
-const db = createClient(
-  'https://oymfccjppvdtmgnnixye.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95bWZjY2pwcHZkdG1nbm5peHllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxMjUwMjAsImV4cCI6MjA4NzcwMTAyMH0.Tfvo_4jYSOX3QXNM00mhOlwAvkOD8O_GnZHRcv5-Kqk'
-);
+// ============================================
+// TRANSLATIONS
+// ============================================
+var T = {
+  hi: {
+    loading: 'लोड हो रहा है...',
+    subtitle: 'ताज़ी सब्ज़ियाँ — सीधे खेत से आपके घर तक',
+    freshBadge: 'आज की ताज़ी सब्ज़ी',
+    search: 'सब्ज़ी ढूंढो...',
+    available: 'आज उपलब्ध है',
+    allCat: 'सब',
+    cartBtn: '🛒 कार्ट देखो',
+    cartTitle: '🛒 आपका कार्ट',
+    yourInfo: 'आपकी जानकारी',
+    namePh: 'आपका नाम *',
+    phonePh: 'मोबाइल नंबर *',
+    addrPh: 'डिलीवरी पता *',
+    payTitle: 'पेमेंट तरीका',
+    upiLabel: 'UPI / QR',
+    codLabel: 'Cash on Delivery',
+    upiInstruct: 'UPI ID पर पेमेंट करें:',
+    copyBtn: '📋 UPI ID कॉपी करें',
+    upiNote: '✅ पेमेंट के बाद screenshot WhatsApp पर भेजें',
+    codMsg: '💵 डिलीवरी के वक्त cash देंगे!',
+    waBtn: 'WhatsApp पर Order भेजो',
+    backBtn: 'वापस जाओ',
+    subtotal: 'Subtotal',
+    delivery: 'Delivery',
+    total: 'Total',
+    outLabel: '⛔ आज नहीं है',
+    addBtn: '+ Add करें',
+    added: '✓ Added',
+    successTitle: 'Order हो गया!',
+    successMsg: 'WhatsApp पर order गया है।\nOwner जल्द confirm करेगा! 🥬',
+    successBtn: '✅ ठीक है',
+    errFill: '❌ नाम, नंबर और पता भरें!',
+    errPhone: '❌ 10 digit का नंबर डालो',
+    errCart: '❌ Cart खाली है!',
+    errMin: '❌ Minimum order ₹',
+    errOffline: '❌ दुकान अभी online नहीं',
+    saving: '⏳ Save हो रहा है...',
+    noVeg: 'कोई सब्ज़ी नहीं मिली',
+    perUnit: 'per',
+  },
+  en: {
+    loading: 'Loading...',
+    subtitle: 'Fresh vegetables — straight from the farm to your home',
+    freshBadge: "Today's Fresh Vegetables",
+    search: 'Search vegetables...',
+    available: 'Available Today',
+    allCat: 'All',
+    cartBtn: '🛒 View Cart',
+    cartTitle: '🛒 Your Cart',
+    yourInfo: 'Your Details',
+    namePh: 'Your Name *',
+    phonePh: 'Mobile Number *',
+    addrPh: 'Delivery Address *',
+    payTitle: 'Payment Method',
+    upiLabel: 'UPI / QR',
+    codLabel: 'Cash on Delivery',
+    upiInstruct: 'Pay to UPI ID:',
+    copyBtn: '📋 Copy UPI ID',
+    upiNote: '✅ Send payment screenshot on WhatsApp',
+    codMsg: '💵 Pay cash at the time of delivery!',
+    waBtn: 'Send Order on WhatsApp',
+    backBtn: 'Go Back',
+    subtotal: 'Subtotal',
+    delivery: 'Delivery',
+    total: 'Total',
+    outLabel: '⛔ Not Available Today',
+    addBtn: '+ Add',
+    added: '✓ Added',
+    successTitle: 'Order Placed!',
+    successMsg: 'Your order has been sent on WhatsApp.\nOwner will confirm soon! 🥬',
+    successBtn: '✅ OK',
+    errFill: '❌ Please fill name, number and address!',
+    errPhone: '❌ Enter a 10 digit number',
+    errCart: '❌ Cart is empty!',
+    errMin: '❌ Minimum order ₹',
+    errOffline: '❌ Shop is currently offline',
+    saving: '⏳ Saving...',
+    noVeg: 'No vegetables found',
+    perUnit: 'per',
+  },
+  ro: {
+    loading: 'Load ho raha hai...',
+    subtitle: 'Taze sabziyan — seedha khet se aapke ghar tak',
+    freshBadge: 'Aaj ki Taza Sabzi',
+    search: 'Sabzi dhundho...',
+    available: 'Aaj Upalabdh Hai',
+    allCat: 'Sab',
+    cartBtn: '🛒 Cart Dekho',
+    cartTitle: '🛒 Aapka Cart',
+    yourInfo: 'Aapki Jankari',
+    namePh: 'Aapka Naam *',
+    phonePh: 'Mobile Number *',
+    addrPh: 'Delivery Address *',
+    payTitle: 'Payment Tarika',
+    upiLabel: 'UPI / QR',
+    codLabel: 'Cash on Delivery',
+    upiInstruct: 'UPI ID pe payment karein:',
+    copyBtn: '📋 Copy UPI ID',
+    upiNote: '✅ Payment ke baad screenshot WhatsApp pe bhejein',
+    codMsg: '💵 Delivery ke waqt cash denge!',
+    waBtn: 'WhatsApp pe Order Bhejo',
+    backBtn: 'Wapas Jao',
+    subtotal: 'Subtotal',
+    delivery: 'Delivery',
+    total: 'Total',
+    outLabel: '⛔ Aaj Nahi Hai',
+    addBtn: '+ Add',
+    added: '✓ Added',
+    successTitle: 'Order Ho Gaya!',
+    successMsg: 'WhatsApp pe order gaya hai.\nOwner jald confirm karega! 🥬',
+    successBtn: '✅ Theek Hai',
+    errFill: '❌ Naam, number aur address bharein!',
+    errPhone: '❌ 10 digit ka number dalo',
+    errCart: '❌ Cart khali hai!',
+    errMin: '❌ Minimum order ₹',
+    errOffline: '❌ Dukan abhi online nahi',
+    saving: '⏳ Save ho raha hai...',
+    noVeg: 'Koi sabzi nahi mili',
+    perUnit: 'per',
+  },
+  kn: {
+    loading: 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...',
+    subtitle: 'ತಾಜಾ ತರಕಾರಿ — ನೇರ ಹೊಲದಿಂದ ನಿಮ್ಮ ಮನೆಗೆ',
+    freshBadge: 'ಇಂದಿನ ತಾಜಾ ತರಕಾರಿ',
+    search: 'ತರಕಾರಿ ಹುಡುಕಿ...',
+    available: 'ಇಂದು ಲಭ್ಯವಿದೆ',
+    allCat: 'ಎಲ್ಲಾ',
+    cartBtn: '🛒 ಕಾರ್ಟ್ ನೋಡಿ',
+    cartTitle: '🛒 ನಿಮ್ಮ ಕಾರ್ಟ್',
+    yourInfo: 'ನಿಮ್ಮ ಮಾಹಿತಿ',
+    namePh: 'ನಿಮ್ಮ ಹೆಸರು *',
+    phonePh: 'ಮೊಬೈಲ್ ನಂಬರ್ *',
+    addrPh: 'ಡೆಲಿವರಿ ವಿಳಾಸ *',
+    payTitle: 'ಪೇಮೆಂಟ್ ವಿಧಾನ',
+    upiLabel: 'UPI / QR',
+    codLabel: 'Cash on Delivery',
+    upiInstruct: 'UPI ID ಗೆ ಪಾವತಿ ಮಾಡಿ:',
+    copyBtn: '📋 UPI ID ಕಾಪಿ ಮಾಡಿ',
+    upiNote: '✅ ಪಾವತಿ ನಂತರ screenshot WhatsApp ಗೆ ಕಳುಹಿಸಿ',
+    codMsg: '💵 ಡೆಲಿವರಿ ಸಮಯದಲ್ಲಿ ನಗದು ನೀಡಿ!',
+    waBtn: 'WhatsApp ನಲ್ಲಿ Order ಕಳುಹಿಸಿ',
+    backBtn: 'ಹಿಂದೆ ಹೋಗಿ',
+    subtotal: 'Subtotal',
+    delivery: 'ಡೆಲಿವರಿ',
+    total: 'ಒಟ್ಟು',
+    outLabel: '⛔ ಇಂದು ಇಲ್ಲ',
+    addBtn: '+ ಸೇರಿಸಿ',
+    added: '✓ ಸೇರಿಸಲಾಗಿದೆ',
+    successTitle: 'Order ಆಯಿತು!',
+    successMsg: 'WhatsApp ಗೆ order ಹೋಗಿದೆ.\nOwner ಶೀಘ್ರದಲ್ಲಿ confirm ಮಾಡುತ್ತಾರೆ! 🥬',
+    successBtn: '✅ ಸರಿ',
+    errFill: '❌ ಹೆಸರು, ನಂಬರ್ ಮತ್ತು ವಿಳಾಸ ತುಂಬಿ!',
+    errPhone: '❌ 10 ಅಂಕಿಯ ನಂಬರ್ ಹಾಕಿ',
+    errCart: '❌ ಕಾರ್ಟ್ ಖಾಲಿಯಾಗಿದೆ!',
+    errMin: '❌ ಕನಿಷ್ಠ order ₹',
+    errOffline: '❌ ಅಂಗಡಿ ಈಗ online ಇಲ್ಲ',
+    saving: '⏳ ಉಳಿಸಲಾಗುತ್ತಿದೆ...',
+    noVeg: 'ಯಾವ ತರಕಾರಿಯೂ ಸಿಗಲಿಲ್ಲ',
+    perUnit: 'per',
+  }
+};
 
-let settings={}, vegs=[], cart={}, payMode='upi', activeCategory='Sab';
+var lang = localStorage.getItem('sabzi_lang') || 'hi';
+var settings={}, vegs=[], cart={}, payMode='upi', activeCategory='';
 
+// ============================================
+// SUPABASE
+// ============================================
+var URL_ = 'https://oymfccjppvdtmgnnixye.supabase.co/rest/v1/';
+var KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95bWZjY2pwcHZkdG1nbm5peHllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxMjUwMjAsImV4cCI6MjA4NzcwMTAyMH0.Tfvo_4jYSOX3QXNM00mhOlwAvkOD8O_GnZHRcv5-Kqk';
+
+function api(table, method, body, query) {
+  return new Promise(function(resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open(method||'GET', URL_+table+(query||''));
+    xhr.setRequestHeader('apikey', KEY);
+    xhr.setRequestHeader('Authorization', 'Bearer '+KEY);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    if(method==='POST') xhr.setRequestHeader('Prefer','return=representation');
+    xhr.onload = function(){
+      if(xhr.status>=200&&xhr.status<300){try{resolve(JSON.parse(xhr.responseText||'[]'));}catch(e){resolve([]);}}
+      else{reject(new Error('HTTP '+xhr.status));}
+    };
+    xhr.onerror = function(){reject(new Error('Network error'));};
+    xhr.send(body?JSON.stringify(body):null);
+  });
+}
+
+// ============================================
+// LANGUAGE
+// ============================================
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('sabzi_lang', l);
+  document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('lb_'+l).classList.add('active');
+  applyLang();
+  renderCategories();
+  renderProducts();
+}
+
+function t(key) { return (T[lang]&&T[lang][key]) || T['ro'][key] || key; }
+
+function applyLang() {
+  var l = T[lang];
+  document.getElementById('heroSubtitle').textContent = l.subtitle;
+  document.getElementById('freshBadge').textContent = l.freshBadge;
+  document.getElementById('searchInput').placeholder = l.search;
+  document.getElementById('sectionTitle').textContent = l.available;
+  document.getElementById('cartTitle').textContent = l.cartTitle;
+  document.getElementById('yourInfoTitle').textContent = l.yourInfo;
+  document.getElementById('custName').placeholder = l.namePh;
+  document.getElementById('custPhone').placeholder = l.phonePh;
+  document.getElementById('custAddress').placeholder = l.addrPh;
+  document.getElementById('payTitle').textContent = l.payTitle;
+  document.getElementById('upiLabel').textContent = l.upiLabel;
+  document.getElementById('codLabel').textContent = l.codLabel;
+  document.getElementById('upiInstruct').textContent = l.upiInstruct;
+  document.getElementById('copyBtn').textContent = l.copyBtn;
+  document.getElementById('upiNote').textContent = l.upiNote;
+  document.getElementById('codMsg').textContent = l.codMsg;
+  document.getElementById('waBtnText').textContent = l.waBtn;
+  document.getElementById('backBtn').textContent = l.backBtn;
+  document.getElementById('successTitle').textContent = l.successTitle;
+  document.getElementById('successMsg').textContent = l.successMsg;
+  document.getElementById('successBtn').textContent = l.successBtn;
+}
+
+// ============================================
+// INIT
+// ============================================
 async function init() {
+  document.getElementById('loadingText').textContent = t('loading');
   try {
-    const { data: sd } = await db.from('settings').select('*').eq('id','main');
-    settings = sd && sd[0] ? sd[0] : {};
-    const { data: vd } = await db.from('vegetables').select('*').order('id');
+    var sd = await api('settings','GET',null,'?id=eq.main');
+    settings = (sd&&sd[0]) ? sd[0] : {};
+    var vd = await api('vegetables','GET',null,'?order=id.asc');
     vegs = vd || [];
-    const name = settings.shop_name || 'Hari Sabzi';
-    const parts = name.split(' ');
+
+    var name = settings.shop_name || 'Hari Sabzi';
+    var parts = name.split(' ');
     document.getElementById('shopName').innerHTML = parts[0]+(parts[1]?' <span>'+parts.slice(1).join(' ')+'</span>':'');
     document.title = '🥬 '+name;
-    document.getElementById('displayUPI').textContent = settings.upi || '—';
-    renderCategories();
-    renderProducts();
+    document.getElementById('displayUPI').textContent = settings.upi||'—';
   } catch(e) {
-    document.getElementById('productGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)"><span style="font-size:2rem">😔</span><p style="margin-top:10px">Load nahi hua, refresh karein</p></div>`;
+    document.getElementById('productGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)"><span style="font-size:2rem">😔</span><p style="margin-top:10px">Load nahi hua, refresh karein</p></div>';
   }
   document.getElementById('loadingScreen').style.display='none';
+  applyLang();
+  renderCategories();
+  renderProducts();
 }
 
 function renderCategories() {
-  const cats=['Sab',...new Set(vegs.map(v=>v.category).filter(Boolean))];
-  document.getElementById('catRow').innerHTML=cats.map(c=>
-    `<button class="cat-btn ${c===activeCategory?'active':''}" onclick="setCategory('${c}')">${c}</button>`
-  ).join('');
+  var allLabel = t('allCat');
+  var cats = [allLabel];
+  vegs.forEach(function(v){ if(v.category&&cats.indexOf(v.category)===-1) cats.push(v.category); });
+  if(!activeCategory) activeCategory = allLabel;
+  document.getElementById('catRow').innerHTML = cats.map(function(c){
+    return '<button class="cat-btn '+(c===activeCategory?'active':'')+'" onclick="setCategory(\''+c+'\')">'+c+'</button>';
+  }).join('');
 }
-function setCategory(c){activeCategory=c;renderCategories();renderProducts();}
+function setCategory(c){ activeCategory=c; renderCategories(); renderProducts(); }
 
 function renderProducts() {
-  const q=document.getElementById('searchInput').value.toLowerCase();
-  const list=vegs.filter(v=>(activeCategory==='Sab'||v.category===activeCategory)&&(!q||v.name.toLowerCase().includes(q)));
-  const grid=document.getElementById('productGrid');
-  if(list.length===0){grid.innerHTML=`<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)"><span style="font-size:2rem">🔍</span><p style="margin-top:8px">Koi sabzi nahi mili</p></div>`;return;}
-  grid.innerHTML=list.map(v=>{
-    const inCart=cart[v.id]||0;
-    return `<div class="prod-card ${!v.available?'out':''}">
-      <span class="prod-emoji">${v.emoji||'🥬'}</span>
-      <div class="prod-info">
-        <div class="prod-name">${v.name}</div>
-        <div class="prod-unit">per ${v.unit||'kg'}</div>
-        <div class="prod-price">₹${v.sell_price||0} <span class="unit">/ ${v.unit||'kg'}</span></div>
-        ${!v.available?`<div class="out-label">⛔ Aaj Nahi Hai</div>`:`
-        <div class="qty-row">
-          <button class="qty-btn" onclick="changeQty(${v.id},-0.5)">−</button>
-          <input class="qty-input" type="number" value="${inCart}" min="0" step="0.5" onchange="setQty(${v.id},parseFloat(this.value))" id="qi_${v.id}">
-          <button class="qty-btn" onclick="changeQty(${v.id},0.5)">+</button>
-          <button class="add-btn ${inCart>0?'added':''}" onclick="changeQty(${v.id},${inCart>0?0:0.5})">${inCart>0?'✓ Added':'+ Add'}</button>
-        </div>`}
-      </div>
-    </div>`;
+  var allLabel = t('allCat');
+  var q = document.getElementById('searchInput').value.toLowerCase();
+  var list = vegs.filter(function(v){
+    var catMatch = activeCategory===allLabel || v.category===activeCategory;
+    var searchMatch = !q || v.name.toLowerCase().indexOf(q)!==-1;
+    return catMatch && searchMatch;
+  });
+  var grid = document.getElementById('productGrid');
+  if(!list.length){
+    grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)"><span style="font-size:2rem">🔍</span><p style="margin-top:8px">'+t('noVeg')+'</p></div>';
+    return;
+  }
+  grid.innerHTML = list.map(function(v){
+    var inCart = cart[v.id]||0;
+    return '<div class="prod-card '+(v.available?'':'out')+'">'+
+      '<span class="prod-emoji">'+(v.emoji||'🥬')+'</span>'+
+      '<div class="prod-info">'+
+        '<div class="prod-name">'+v.name+'</div>'+
+        '<div class="prod-unit">'+t('perUnit')+' '+(v.unit||'kg')+'</div>'+
+        '<div class="prod-price">₹'+(v.sell_price||0)+' <span class="unit">/ '+(v.unit||'kg')+'</span></div>'+
+        (!v.available
+          ? '<div class="out-label">'+t('outLabel')+'</div>'
+          : '<div class="qty-row">'+
+              '<button class="qty-btn" onclick="changeQty('+v.id+',-0.5)">−</button>'+
+              '<input class="qty-input" type="number" value="'+inCart+'" min="0" step="0.5" onchange="setQty('+v.id+',parseFloat(this.value))" id="qi_'+v.id+'">'+
+              '<button class="qty-btn" onclick="changeQty('+v.id+',0.5)">+</button>'+
+              '<button class="add-btn '+(inCart>0?'added':'')+'" onclick="changeQty('+v.id+','+(inCart>0?0:0.5)+')">'+
+                (inCart>0?t('added'):t('addBtn'))+
+              '</button>'+
+            '</div>'
+        )+
+      '</div>'+
+    '</div>';
   }).join('');
 }
 
@@ -249,27 +509,33 @@ function changeQty(id,delta){
   renderProducts();updateCartBar();
 }
 function setQty(id,val){if(isNaN(val)||val<=0){delete cart[id];}else{cart[id]=val;}renderProducts();updateCartBar();}
-function getTotal(){return Object.entries(cart).reduce((s,[id,qty])=>{const v=vegs.find(v=>v.id==id);return s+(v?(v.sell_price||0)*qty:0);},0);}
+function getTotal(){return Object.entries(cart).reduce(function(s,e){var v=vegs.find(function(v){return v.id==e[0];});return s+(v?(v.sell_price||0)*e[1]:0);},0);}
+
 function updateCartBar(){
-  const t=getTotal();
-  document.getElementById('cartTotal').textContent='₹'+t.toFixed(0);
+  var total=getTotal();
+  document.getElementById('cartTotal').textContent='₹'+total.toFixed(0);
   document.getElementById('cartCount').textContent=Object.keys(cart).length;
   document.getElementById('cartBar').classList.toggle('hidden',Object.keys(cart).length===0);
+  document.getElementById('cartBtnText').innerHTML=t('cartBtn')+' &nbsp;·&nbsp; <span id="cartTotal">₹'+total.toFixed(0)+'</span>';
 }
+
 function openCart(){renderCartModal();document.getElementById('cartModal').classList.add('open');}
 function closeCart(){document.getElementById('cartModal').classList.remove('open');}
+
 function renderCartModal(){
-  const items=Object.entries(cart).map(([id,qty])=>{
-    const v=vegs.find(v=>v.id==id);if(!v)return'';
-    return `<div class="cart-item"><span class="ci-emoji">${v.emoji||'🥬'}</span><div class="ci-info"><div class="ci-name">${v.name}</div><div class="ci-qty">${qty} ${v.unit||'kg'} × ₹${v.sell_price||0}</div></div><div class="ci-price">₹${(qty*(v.sell_price||0)).toFixed(0)}</div><button class="ci-del" onclick="removeItem(${v.id})">✕</button></div>`;
+  var items=Object.entries(cart).map(function(e){
+    var v=vegs.find(function(v){return v.id==e[0];});if(!v)return'';
+    var p=v.sell_price||0;
+    return '<div class="cart-item"><span class="ci-emoji">'+(v.emoji||'🥬')+'</span><div class="ci-info"><div class="ci-name">'+v.name+'</div><div class="ci-qty">'+e[1]+' '+(v.unit||'kg')+' × ₹'+p+'</div></div><div class="ci-price">₹'+(e[1]*p).toFixed(0)+'</div><button class="ci-del" onclick="removeItem('+v.id+')">✕</button></div>';
   }).join('');
-  document.getElementById('cartItemsList').innerHTML=items||'<div style="text-align:center;padding:24px;color:var(--muted)">Cart khali hai</div>';
-  const sub=getTotal(),del=settings.delivery||0,grand=sub+del;
-  document.getElementById('cartTotalBox').innerHTML=`<div class="total-box"><div class="total-line"><span>Subtotal</span><span>₹${sub.toFixed(0)}</span></div><div class="total-line"><span>Delivery</span><span>₹${del}</span></div><div class="total-line big"><span>Total</span><span>₹${grand.toFixed(0)}</span></div></div>`;
-  document.getElementById('cartSubtitle').textContent=`${Object.keys(cart).length} items • ₹${grand.toFixed(0)}`;
+  document.getElementById('cartItemsList').innerHTML=items||'<div style="text-align:center;padding:24px;color:var(--muted)">—</div>';
+  var sub=getTotal(),del=settings.delivery||0,grand=sub+del;
+  document.getElementById('cartTotalBox').innerHTML='<div class="total-box"><div class="total-line"><span>'+t('subtotal')+'</span><span>₹'+sub.toFixed(0)+'</span></div><div class="total-line"><span>'+t('delivery')+'</span><span>₹'+del+'</span></div><div class="total-line big"><span>'+t('total')+'</span><span>₹'+grand.toFixed(0)+'</span></div></div>';
+  document.getElementById('cartSubtitle').textContent=Object.keys(cart).length+' items • ₹'+grand.toFixed(0);
   selectPay('upi');
 }
 function removeItem(id){delete cart[id];updateCartBar();renderCartModal();renderProducts();}
+
 function selectPay(mode){
   payMode=mode;
   document.getElementById('po_upi').classList.toggle('active',mode==='upi');
@@ -277,39 +543,55 @@ function selectPay(mode){
   document.getElementById('upiBox').classList.toggle('show',mode==='upi');
   document.getElementById('codBox').classList.toggle('show',mode==='cod');
 }
-function copyUPI(){navigator.clipboard.writeText(settings.upi||'').then(()=>showToast('UPI ID copy ho gaya! 📋'));}
+function copyUPI(){navigator.clipboard.writeText(settings.upi||'').then(function(){showToast('✅ UPI ID copied!');});}
 
 async function placeOrder(){
-  const name=document.getElementById('custName').value.trim();
-  const phone=document.getElementById('custPhone').value.trim();
-  const address=document.getElementById('custAddress').value.trim();
-  if(!name||!phone||!address)return showToast('❌ Naam, number aur address bharein!');
-  if(phone.length!==10)return showToast('❌ 10 digit ka number dalo');
-  if(Object.keys(cart).length===0)return showToast('❌ Cart khali hai!');
-  const sub=getTotal(),del=settings.delivery||0,grand=sub+del;
-  if(grand<(settings.min_order||0))return showToast(`❌ Minimum order ₹${settings.min_order} hai`);
-  if(!settings.wa_num)return showToast('❌ Dukaan abhi online nahi');
-  const btn=document.getElementById('orderBtn');
-  btn.disabled=true;btn.textContent='⏳ Save ho raha hai...';
-  const orderNum='ORD'+Date.now().toString().slice(-6);
-  const itemLines=Object.entries(cart).map(([id,qty])=>{
-    const v=vegs.find(v=>v.id==id);
-    return `${v.emoji||''} ${v.name} ${qty}${v.unit||'kg'} = ₹${(qty*(v.sell_price||0)).toFixed(0)}`;
+  var name=document.getElementById('custName').value.trim();
+  var phone=document.getElementById('custPhone').value.trim();
+  var address=document.getElementById('custAddress').value.trim();
+  if(!name||!phone||!address){showToast(t('errFill'));return;}
+  if(phone.length!==10){showToast(t('errPhone'));return;}
+  if(!Object.keys(cart).length){showToast(t('errCart'));return;}
+  var sub=getTotal(),del=settings.delivery||0,grand=sub+del;
+  if(grand<(settings.min_order||0)){showToast(t('errMin')+(settings.min_order||0));return;}
+  if(!settings.wa_num){showToast(t('errOffline'));return;}
+
+  var btn=document.getElementById('orderBtn');
+  btn.disabled=true;
+  document.getElementById('waBtnText').textContent=t('saving');
+
+  var orderNum='ORD'+Date.now().toString().slice(-6);
+  var itemLines=Object.entries(cart).map(function(e){
+    var v=vegs.find(function(v){return v.id==e[0];});
+    return (v.emoji||'')+' '+v.name+' '+e[1]+(v.unit||'kg')+' = ₹'+(e[1]*(v.sell_price||0)).toFixed(0);
   });
-  const {error}=await db.from('orders').insert({
-    id:orderNum,customer_name:name,phone,address,
-    items:JSON.stringify(itemLines),total:grand,
-    pay_mode:payMode==='upi'?'UPI':'COD',status:'Pending'
-  });
-  if(error){showToast('❌ Save error: '+error.message);btn.disabled=false;btn.textContent='WhatsApp pe Order Bhejo';return;}
-  const msg=`🛒 *NAYA ORDER — ${orderNum}*\n\n👤 *Customer:* ${name}\n📱 *Mobile:* ${phone}\n📍 *Address:* ${address}\n\n*Order:*\n${itemLines.map(i=>`  • ${i}`).join('\n')}\n\n━━━━━━━━━━\nSubtotal: ₹${sub.toFixed(0)}\nDelivery: ₹${del}\n*Total: ₹${grand.toFixed(0)}*\n\n💰 *Payment:* ${payMode==='upi'?'💳 UPI':'💵 Cash on Delivery'}\n\n_${settings.shop_name||'Sabzi Dukan'} App se order_`;
-  window.open(`https://wa.me/91${settings.wa_num}?text=${encodeURIComponent(msg)}`,'_blank');
+
+  try{
+    await api('orders','POST',{id:orderNum,customer_name:name,phone:phone,address:address,items:JSON.stringify(itemLines),total:grand,pay_mode:payMode==='upi'?'UPI':'COD',status:'Pending'});
+  }catch(e){console.log('Save error:',e);}
+
+  var msg='🛒 *NAYA ORDER — '+orderNum+'*\n\n👤 *Customer:* '+name+'\n📱 *Mobile:* '+phone+'\n📍 *Address:* '+address+'\n\n*Order:*\n'+itemLines.map(function(i){return '  • '+i;}).join('\n')+'\n\n━━━━━━━━━━\nSubtotal: ₹'+sub.toFixed(0)+'\nDelivery: ₹'+del+'\n*Total: ₹'+grand.toFixed(0)+'*\n\n💰 *Payment:* '+(payMode==='upi'?'💳 UPI':'💵 Cash on Delivery')+'\n\n_'+(settings.shop_name||'Sabzi Dukan')+' App se order_';
+
+  window.open('https://wa.me/91'+settings.wa_num+'?text='+encodeURIComponent(msg),'_blank');
   closeCart();cart={};updateCartBar();renderProducts();
   document.getElementById('successOverlay').classList.add('show');
-  btn.disabled=false;btn.textContent='WhatsApp pe Order Bhejo';
+  btn.disabled=false;
+  document.getElementById('waBtnText').textContent=t('waBtn');
 }
+
 document.getElementById('cartModal').addEventListener('click',function(e){if(e.target===this)closeCart();});
-function showToast(msg){let t=document.getElementById('gt');if(!t){t=document.createElement('div');t.id='gt';t.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e3829;border:1px solid #2d5040;color:#e8f5ee;padding:10px 20px;border-radius:10px;font-size:0.85rem;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap';document.body.appendChild(t);}t.textContent=msg;t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';clearTimeout(t._t);t._t=setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(20px)';},2500);}
+
+function showToast(msg){
+  var t=document.getElementById('gt');
+  if(!t){t=document.createElement('div');t.id='gt';t.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e3829;border:1px solid #2d5040;color:#e8f5ee;padding:10px 20px;border-radius:10px;font-size:0.85rem;font-weight:600;opacity:0;transition:all 0.3s;z-index:999;white-space:nowrap;max-width:90vw;text-align:center';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(t._t);t._t=setTimeout(function(){t.style.opacity='0';t.style.transform='translateX(-50%) translateY(20px)';},2800);
+}
+
+// Set initial lang btn
+document.getElementById('lb_'+lang).classList.add('active');
+document.querySelectorAll('.lang-btn').forEach(function(b){if(b.id!=='lb_'+lang)b.classList.remove('active');});
+
 init();
 </script>
 </body>
