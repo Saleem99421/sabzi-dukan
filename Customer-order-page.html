@@ -449,8 +449,8 @@ function setLang(l) {
   document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('active');});
   document.getElementById('lb_'+l).classList.add('active');
   applyLang();
-  // FIX: Category ko 'Sab'/'All' pe reset karo language ke hisaab se
-  activeCategory = t('allCat');
+  // activeCategory ko ALL pe reset karo — language change hone par
+  activeCategory = 'ALL';
   renderCategories();
   renderProducts();
 }
@@ -505,29 +505,61 @@ async function init() {
   applyLang();
   renderCategories();
   renderProducts();
+
+  // Auto-refresh har 30 second — owner update kare to customer ko turant dikhe
+  setInterval(async function(){
+    try {
+      var vd = await api('vegetables','GET',null,'?order=id.asc');
+      var sd = await api('settings','GET',null,'?id=eq.main');
+      if(vd) vegs = vd;
+      if(sd && sd[0]) {
+        settings = sd[0];
+        document.getElementById('displayUPI').textContent = settings.upi||'—';
+        var name = settings.shop_name||'Hari Sabzi';
+        var parts = name.split(' ');
+        document.getElementById('shopName').innerHTML = parts[0]+(parts[1]?' <span>'+parts.slice(1).join(' ')+'</span>':'');
+      }
+      renderCategories();
+      renderProducts();
+    } catch(e){}
+  }, 30000);
+}
+
+// Category translations — Roman se har language mein
+var CAT_NAMES = {
+  'Sabzi': { hi:'सब्ज़ी', en:'Vegetables', kn:'ತರಕಾರಿ', ro:'Sabzi' },
+  'Patta': { hi:'पत्ते', en:'Leafy', kn:'ಸೊಪ್ಪು', ro:'Patta' },
+  'Masala': { hi:'मसाला', en:'Spices', kn:'ಮಸಾಲೆ', ro:'Masala' },
+  'Fruit': { hi:'फल', en:'Fruits', kn:'ಹಣ್ಣು', ro:'Fruit' },
+};
+
+function getCatLabel(c) {
+  var allLabel = t('allCat');
+  if(c === allLabel || c === 'Sab' || c === 'All' || c === 'ಎಲ್ಲಾ' || c === 'सब') return allLabel;
+  var tr = CAT_NAMES[c];
+  if(!tr) return c;
+  return tr[lang] || tr.ro || c;
 }
 
 function renderCategories() {
   var allLabel = t('allCat');
-  var cats = [allLabel];
-  vegs.forEach(function(v){ if(v.category&&cats.indexOf(v.category)===-1) cats.push(v.category); });
-  // FIX: activeCategory sirf tab set karo jab bilkul empty ho
-  if(!activeCategory) activeCategory = allLabel;
-  document.getElementById('catRow').innerHTML = cats.map(function(c){
-    // Active check: 'Sab'/'All'/etc. koi bhi allLabel match kare
-    var isActive = (c===activeCategory) || (c===allLabel && activeCategory===allLabel);
-    return '<button class="cat-btn '+(isActive?'active':'')+'" onclick="setCategory(\''+c+'\')">'+c+'</button>';
-  }).join('');
+  // Unique raw categories from DB
+  var rawCats = [];
+  vegs.forEach(function(v){ if(v.category && rawCats.indexOf(v.category)===-1) rawCats.push(v.category); });
+  if(!activeCategory) activeCategory = 'ALL';
+
+  document.getElementById('catRow').innerHTML = [
+    '<button class="cat-btn '+(activeCategory==='ALL'?'active':'')+'" onclick="setCategory(\'ALL\')">'+allLabel+'</button>'
+  ].concat(rawCats.map(function(c){
+    return '<button class="cat-btn '+(activeCategory===c?'active':'')+'" onclick="setCategory(\''+c+'\')">'+getCatLabel(c)+'</button>';
+  })).join('');
 }
 function setCategory(c){ activeCategory=c; renderCategories(); renderProducts(); }
 
 function renderProducts() {
-  var allLabel = t('allCat');
   var q = document.getElementById('searchInput').value.toLowerCase();
   var list = vegs.filter(function(v){
-    // FIX: activeCategory match karo — allLabel ke alawa sab original category se match karo
-    var isAll = activeCategory===allLabel;
-    var catMatch = isAll || v.category===activeCategory;
+    var catMatch = activeCategory==='ALL' || v.category===activeCategory;
     var dn = getVegDisplay(v);
     var searchMatch = !q ||
       v.name.toLowerCase().indexOf(q)!==-1 ||
