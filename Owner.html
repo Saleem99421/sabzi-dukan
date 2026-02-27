@@ -470,7 +470,7 @@ async function saveSmartVeg() {
 }
 document.getElementById('smartM').addEventListener('click',function(e){if(e.target===this)closeSmartAdd();});
 
-
+async function saveVegs(){
   var btn=document.getElementById('svBtn');btn.disabled=true;btn.textContent='⏳ Saving...';
   try {
     var rows=document.querySelectorAll('#vt tr');
